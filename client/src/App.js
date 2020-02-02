@@ -1,6 +1,6 @@
 import React from 'react';
 import './css/App.css';
-import Record from './Record';
+import Record from './components/Record';
 import './index.css';
 
 

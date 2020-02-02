@@ -10,18 +10,21 @@ class Record extends React.Component {
         super(props);
         this.state = {
             record: false,
-            recordedBlob: []
+            recordedBlob: [],
+            finishedRecording: false
         };
         // This binding is necessary to make `this` work in the callback
         this.stopRecording = this.stopRecording.bind(this);
         this.startRecording = this.startRecording.bind(this);
         this.onStop = this.onStop.bind(this)
+        this.transmitAudioElement = React.createRef();
+
 
     }
     stopRecording = () => {
         this.setState(state => ({
             record: !state.record
-           //record: false
+            //record: false
         }));
     }
 
@@ -33,8 +36,7 @@ class Record extends React.Component {
         }));
         // Record for 10 seconds before setting the record state to false
         setTimeout(() => {
-            console.log("Stopped. Recorded for 2 seconds.....")
-                this.stopRecording();
+            this.stopRecording();
         }, 2000);
     }
 
@@ -44,16 +46,19 @@ class Record extends React.Component {
         // console.log('chunk of real-time data is: ', recordedBlob);
         var recordings = Array()
         recordings.push(recordedBlob)
-        console.log(recordings.length)
     }
 
     // callback to execute when audio stops recording
     onStop(recordedBlob) {
-        console.log('ON STOP:: recordedBlob is: ', recordedBlob);
+        console.log("ONSTOP CALLED")
         this.setState(state => ({
-            //record: !state.record
-            recordedBlob: this.state.recordedBlob.push(recordedBlob)}));
-        
+            recordedBlob: this.state.recordedBlob.push(recordedBlob),
+            finishedRecording: true
+        }),
+        console.log("STate IN PARENT: ", this.state.recordedBlob),
+        this.transmitAudioElement.current.updateState(this.state.recordedBlob)
+        )
+    
         //this.setState(state => ({recordedBlob: "UPDATED BLOB"}))
         // Need to send this recordedBlob to another compoenent
     }
@@ -71,7 +76,18 @@ class Record extends React.Component {
                     Click to record the next 10 seconds
                 </p>
                 <Button onClick={this.startRecording} variant="danger">Start recording</Button>
-                <TransmitAudio recordingData = {this.state.recordedBlob}/>
+                <TransmitAudio ref={this.transmitAudioElement} />
+
+
+                {this.state.finishedRecording ? (
+                    <TransmitAudio recordingData={this.state.recordedBlob} />
+
+                ) : (
+                        <div> Audio not recorded... </div>
+                    )}
+
+
+
             </div>
         );
     }
