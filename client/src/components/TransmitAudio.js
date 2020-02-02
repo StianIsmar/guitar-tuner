@@ -11,7 +11,7 @@ class TransmitAudio extends React.Component {
     }
 
     updateState = (newState) => {
-        console.log("This is is nte child", newState)
+        console.log("This is the file: ", newState)
         this.uploadFile(newState)
         //this.postTest()
     }
