@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Martel+Sans');
+
+.App {
+  margin: 0;
+  font-family: 'Martel Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.Info{
+  color: white;
+  font-size: 1.7em;
+}
+
+
