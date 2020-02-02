@@ -11,14 +11,16 @@ class TransmitAudio extends React.Component {
     }
 
     updateState = (newState) => {
-        uploadFile(newState)
-
+        console.log("This is is nte child", newState)
+        this.uploadFile(newState)
+        //this.postTest()
     }
-    uploadFile(file) {
-        fetch('https://path/to/api', {
+
+    postTest() {
+        fetch('http://127.0.0.1:5000/testpost', {
             // content-type header should not be specified!
             method: 'POST',
-            body: file,
+            name: "stianI",
         })
             .then(response => response.json())
             .then(success => {
@@ -27,6 +29,39 @@ class TransmitAudio extends React.Component {
             .catch(error => console.log(error)
             );
     }
+
+
+    uploadFile(file) {
+        var form = new FormData();
+        form.append('file',file)
+        form.append('title',"Guitar recording")
+        fetch('http://127.0.0.1:5000/audio_record', {
+            // content-type header should not be specified!
+            method: 'POST',
+            body: form
+        }).then(function (response){
+            return (response.text())
+        }).then(function(text){
+            console.log(text) // The text the endpoint returns
+        })
+            .catch(error => console.log(error)
+            );
+    }
+
+    /*
+        var http = new XMLHttpRequest();
+          http.open('POST', sttEndpoint, true);
+          http.setRequestHeader('Content-type', 'audio/webm;codecs=opus');
+          http.onreadystatechange = function() {
+            if (http.readyState === 4 && http.status === 200 && http.responseText) {
+              Api.setResponsePayload(http.responseText);
+            }
+          };
+          // Send request
+          http.send(blob);
+          chunks = [];
+          };
+          */
     render() {
         return (
             <div>
