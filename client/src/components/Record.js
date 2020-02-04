@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Button from 'react-bootstrap/Button';
 import { ReactMic } from 'react-mic';
 import TransmitAudio from './TransmitAudio'
@@ -11,14 +11,14 @@ class Record extends React.Component {
         this.state = {
             record: false,
             recordedBlob: [],
-            finishedRecording: false
+            finishedRecording: false,
+            blobUrl: ''
         };
         // This binding is necessary to make `this` work in the callback
         this.stopRecording = this.stopRecording.bind(this);
         this.startRecording = this.startRecording.bind(this);
         this.onStop = this.onStop.bind(this)
         this.transmitAudioElement = React.createRef();
-
 
     }
     stopRecording = () => {
@@ -50,18 +50,17 @@ class Record extends React.Component {
 
     // callback to execute when audio stops recording
     onStop(recordedBlob) {
-        console.log("ONSTOP CALLED")
         this.setState(state => ({
             recordedBlob: this.state.recordedBlob.push(recordedBlob),
             finishedRecording: true
         }),
-        console.log("STate IN PARENT: ", this.state.recordedBlob),
-        this.transmitAudioElement.current.updateState(this.state.recordedBlob)
+            console.log("STate IN PARENT: ", this.state.recordedBlob),
+            console.log("Recorded blob to be handled:", recordedBlob),
+            this.transmitAudioElement.current.updateState(recordedBlob)
         )
-    
-        //this.setState(state => ({recordedBlob: "UPDATED BLOB"}))
-        // Need to send this recordedBlob to another compoenent
+
     }
+
     render() {
         return (
             <div className="Record">
@@ -85,9 +84,6 @@ class Record extends React.Component {
                 ) : (
                         <div> Audio not recorded... </div>
                     )}
-
-
-
             </div>
         );
     }

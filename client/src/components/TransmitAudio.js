@@ -11,7 +11,7 @@ class TransmitAudio extends React.Component {
     }
 
     updateState = (newState) => {
-        console.log("This is the file: ", newState)
+        console.log("This is the file which is being sent in the POST request: ", newState)
         this.uploadFile(newState)
         //this.postTest()
     }
@@ -30,22 +30,33 @@ class TransmitAudio extends React.Component {
             );
     }
 
+    uploadFile(blob) {
+        console.log("BLOB", blob)
+        // var blob = new Blob([blob])
+        var reader = new FileReader();
+        reader.readAsDataURL(blob.blob);
+        reader.onloadend = function () {
+            var base64data = reader.result;
 
-    uploadFile(file) {
-        var form = new FormData();
-        form.append('file',file)
-        form.append('title',"Guitar recording")
-        fetch('http://127.0.0.1:5000/audio_record', {
-            // content-type header should not be specified!
-            method: 'POST',
-            body: form
-        }).then(function (response){
-            return (response.text())
-        }).then(function(text){
-            console.log(text) // The text the endpoint returns
-        })
-            .catch(error => console.log(error)
-            );
+            var fd = new FormData(); // Creating the form for the POST
+            fd.append('base64data', base64data);
+
+            fetch('http://127.0.0.1:5000/audio_record', {
+                // content-type header should not be specified!
+                method: 'POST',
+                body: fd,
+                processData: false,
+                contentType: false,
+                enctype: 'multipart/form-data'
+            }).then(function (response) {
+                return (response.text())
+            }).then(function (text) {
+                console.log(text) // The text the endpoint returns
+            })
+                .catch(error => console.log(error)
+                );
+
+        }
     }
 
     /*
