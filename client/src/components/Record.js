@@ -1,90 +1,70 @@
-import React, { Fragment } from 'react';
+import React, { Component } from 'react';
+import { Fragment } from 'react';
 import Button from 'react-bootstrap/Button';
-import { ReactMic } from 'react-mic';
+import MicRecorder from 'mic-recorder-to-mp3';
 import TransmitAudio from './TransmitAudio'
 
+const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
-// Class to take in the recording for the guitar string
-class Record extends React.Component {
+
+class Record extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            record: false,
-            recordedBlob: [],
-            finishedRecording: false,
-            blobUrl: ''
+            isRecording: false,
+            blobURL: '',
+            isBlocked: false,
         };
-        // This binding is necessary to make `this` work in the callback
-        this.stopRecording = this.stopRecording.bind(this);
-        this.startRecording = this.startRecording.bind(this);
-        this.onStop = this.onStop.bind(this)
         this.transmitAudioElement = React.createRef();
-
-    }
-    stopRecording = () => {
-        this.setState(state => ({
-            record: !state.record
-            //record: false
-        }));
-    }
-
-    startRecording() {
-        // Record and save 10 seconds of audio
-        this.setState(state => ({
-            //record: !state.record
-            record: true
-        }));
-        // Record for 10 seconds before setting the record state to false
-        setTimeout(() => {
-            this.stopRecording();
-        }, 2000);
     }
 
 
+    start = () => {
+        if (this.state.isBlocked) {
+            console.log('Permission Denied');
+        } else {
+            Mp3Recorder
+                .start()
+                .then(() => {
+                    this.setState({ isRecording: true });
+                }).catch((e) => console.error(e));
+        }
+    };
 
-    onData(recordedBlob) {
-        // console.log('chunk of real-time data is: ', recordedBlob);
-        var recordings = Array()
-        recordings.push(recordedBlob)
-    }
+    stop = () => {
+        Mp3Recorder
+            .stop()
+            .getMp3()
+            .then(([buffer, blob]) => {
+                const blobURL = URL.createObjectURL(blob)
+                // Send to transmitAudioeElement component
+                this.transmitAudioElement.current.uploadFile(blob, blobURL)
+                this.setState({ blobURL, isRecording: false });
+            }).catch((e) => console.log("eEEEE", e));
+    };
 
-    // callback to execute when audio stops recording
-    onStop(recordedBlob) {
-        this.setState(state => ({
-            recordedBlob: this.state.recordedBlob.push(recordedBlob),
-            finishedRecording: true
-        }),
-            console.log("STate IN PARENT: ", this.state.recordedBlob),
-            console.log("Recorded blob to be handled:", recordedBlob),
-            this.transmitAudioElement.current.updateState(recordedBlob)
-        )
-
+    componentDidMount() {
+        navigator.getUserMedia({ audio: true },
+            () => {
+                console.log('Permission Granted');
+                this.setState({ isBlocked: false });
+            },
+            () => {
+                console.log('Permission Denied');
+                this.setState({ isBlocked: true })
+            },
+        );
     }
 
     render() {
         return (
             <div className="Record">
-                <ReactMic
-                    record={this.state.record}
-                    className="sound-wave"
-                    onStop={this.onStop}
-                    onData={this.onData}
-                    strokeColor="#F28F3B"
-                    backgroundColor="#588B8B" />
-                <p className="Info">
-                    Click to record the next 10 seconds
-                </p>
-                <Button onClick={this.startRecording} variant="danger">Start recording</Button>
-                <TransmitAudio ref={this.transmitAudioElement} />
-
-
-                {this.state.finishedRecording ? (
-                    <TransmitAudio recordingData={this.state.recordedBlob} />
-
-                ) : (
-                        <div> Audio not recorded... </div>
-                    )}
+                <Button variant="danger" onClick={this.start} disabled={this.state.isRecording}>Record</Button>
+                <Button variant="danger" onClick={this.stop} disabled={!this.state.isRecording}>Stop</Button>
+                <audio src={this.state.blobURL} controls="controls" />
+                <TransmitAudio ref={this.transmitAudioElement}/>
             </div>
+
         );
     }
 }

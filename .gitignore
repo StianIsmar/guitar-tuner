@@ -2,4 +2,8 @@
 package.json
 
 .DS_store
+/server/ffmpeg-4.2.2/
+/server/venv
+/server/uploads
+server/.idea
 
