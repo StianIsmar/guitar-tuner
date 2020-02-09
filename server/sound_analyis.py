@@ -57,7 +57,7 @@ class Sound_analyis:
         plt.xlabel("Hz")
         plt.ylabel("Normalized magnitued")
         plt.xlim(0, MAX_GUITAR_FREQUENCY)
-        plt.ylim(0,300)
+        plt.ylim(0,max_val+5)
         plt.xticks(np.arange(0, MAX_GUITAR_FREQUENCY, 10))
         plt.margins(0)
 
@@ -73,13 +73,15 @@ class Sound_analyis:
         LOWER_LIMIT = (self.freq_limit - 30)
         print("UPPER_LIMIT:", UPPER_LIMIT )
         print("LOWER_LIMIT:", LOWER_LIMIT )
+        #indexes = np.nonzero((f > UPPER_LIMIT) & (f < LOWER_LIMIT))
 
-        indexes = [(f > (UPPER_LIMIT)) & (f < (LOWER_LIMIT))] # Look for the frequency magnitude peak in only the expected ranges
+        indexes = [(f > (UPPER_LIMIT)) | (f < (LOWER_LIMIT))] # Look for the frequency magnitude peak in only the expected ranges
         # print("THIS IS INDEXES", indexes)
         for i, index in enumerate(indexes[0]):
-            if (index == True):
+            if (index):
                 y_norm[i] = 0
             else:
+                print(index)
                 continue
 
         max_value = np.max(y_norm)

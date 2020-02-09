@@ -14,11 +14,7 @@ class TransmitAudio extends React.Component {
         console.log("This is the file which is being sent in the POST request: ", newState)
         this.uploadFile(newState)
         //this.postTest()
-
-
     }
-
-
 
     postTest() {
         fetch('http://127.0.0.1:5000/testpost', {

@@ -67,7 +67,7 @@ class Record extends Component {
             <div className="record-wrapper row">
                 <header>
                     <h1>
-                        Welcome to GuitarTuner.
+                        Welcome to GuitarTuner
                     </h1>
                     <h3>Select the string you are tuning</h3>
                 </header>
