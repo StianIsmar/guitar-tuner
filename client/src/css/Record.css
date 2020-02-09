@@ -1,3 +1,60 @@
 body > #root > div {
     height: 100vh;
   }
+
+  header{
+    color: #23395B;
+    background-color:inherit;
+    margin-bottom: 50px;
+
+  }
+
+  .record-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+  }
+
+  .btn-primary, .mb-3{
+    background-color: inherit !important;
+    padding: 0 !important;
+    
+  }
+  .btn-primary, .select-string, .record-button {
+    border: none;
+    border-color:none  }
+
+  .btn-secondary{
+    background-color: #23395B !important;
+    border-color: #23395B
+    
+  }
+
+  .record-button{
+    margin-bottom: 10px !important;
+  }
+
+
+  .playback{
+
+    margin:20px;
+    padding-top: 10px;
+  }
+  
