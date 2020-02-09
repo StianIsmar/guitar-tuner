@@ -17,6 +17,9 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from tempfile import TemporaryFile
+import sound_analyis
+
 
 # sys.path.append('/ffmpeg-4.2.2')
 #!/usr/bin/env python
@@ -47,7 +50,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'super secret key'
 
 
-
 CORS(app)
 
 
@@ -68,12 +70,29 @@ def upload_file():
         file = request.files['base64data']
         print(file)
         audio = pydub.AudioSegment.from_mp3(file)
+        segment_duration = len(audio) # important property for FFT analyis
+        print("Segment duration", segment_duration)
         samples = audio.get_array_of_samples()
         samples = np.array(samples)
         print(len(samples))
         plt.figure(figsize=(15,5))
         plt.plot(samples)
         plt.savefig("plot")
+        outfile = TemporaryFile()
+        np.save(outfile, samples)
+        print(samples)
+
+
+        # FFT
+        analysis = sound_analyis.Sound_analyis(samples,segment_duration)
+        analysis.fft_transform()
+
+        
+        # fft_transform(samples)
+        
+
+
+
         #if 'base64data' not in request.files:
             #print("File was not here....")
             #flash('No file part')
@@ -96,8 +115,6 @@ def upload_file():
               <input type=submit value=Upload>
             </form>
             '''
-
-
 
 def save_record():
     if request.method == 'GET':
