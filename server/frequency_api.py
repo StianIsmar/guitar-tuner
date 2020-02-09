@@ -82,9 +82,12 @@ def upload_file():
         np.save(outfile, samples)
         print(samples)
 
+        np.savetxt('segment_duration.out',[segment_duration])
+        np.savetxt('test.out', samples, delimiter=',')
+
 
         # FFT
-        analysis = sound_analyis.Sound_analyis(samples,segment_duration)
+        analysis = sound_analyis.Sound_analyis(samples,segment_duration,"E2")
         analysis.fft_transform()
 
         
