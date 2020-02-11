@@ -35,6 +35,7 @@ body > #root > div {
   .btn-primary, .mb-3{
     background-color: inherit !important;
     padding: 0 !important;
+    border-width: 0 !important;
     
   }
   .btn-primary, .select-string, .record-button {

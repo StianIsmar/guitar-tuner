@@ -62,7 +62,8 @@ def upload_file():
         # print("request is a post request")
         # check if the post request has the file part
         file = request.files['base64data']
-        print(file)
+        selected_string = request.files['stringSelected']
+        print(selected_string)
         audio = pydub.AudioSegment.from_mp3(file)
         segment_duration = len(audio)  # important property for FFT analyis
         print("Segment duration", segment_duration)

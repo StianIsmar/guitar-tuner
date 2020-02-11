@@ -30,7 +30,7 @@ class TransmitAudio extends React.Component {
             );
     }
 
-    uploadFile(blob, blobUrl) {
+    uploadFile(blob, blobUrl, stringSelected) {
         console.log("BLOB SENT: ", blob)
         // var blob = new Blob([blob])
         /*
@@ -42,6 +42,8 @@ class TransmitAudio extends React.Component {
 
         var fd = new FormData(); // Creating the form for the POST
         fd.append('base64data', blob,Blob);
+        var stringObj = {'stringSelected': stringSelected}
+        fd.append('stringSelected',JSON.stringify(stringObj),JSON)
         console.log('Blob appended')
 
         fetch('http://127.0.0.1:5000/audio_record', {
