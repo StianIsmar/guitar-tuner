@@ -81,7 +81,6 @@ class Sound_analyis:
             if (index):
                 y_norm[i] = 0
             else:
-                print(index)
                 continue
 
         max_value = np.max(y_norm)

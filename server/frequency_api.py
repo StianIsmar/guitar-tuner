@@ -92,9 +92,13 @@ def upload_file():
             comment = "Loosen string"
 
         # a Python object (dict):
+        print(desired_freq)
+        print("max index", max_index)
+        print(tighten)
+        print(comment)
         response_dict = {
             "desired_freq": desired_freq,
-            "actual_freq": max_index,
+            "actual_freq": max_index[0],
             "tighten": tighten,
             "comment": comment
         }
