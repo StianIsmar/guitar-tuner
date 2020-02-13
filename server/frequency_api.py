@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 import audioread
 from flask import Flask, request  # import main Flask class and request object
 from flask_cors import CORS
@@ -17,12 +17,15 @@ import numpy as np
 import matplotlib
 
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as pl
 from tempfile import TemporaryFile
 import sound_analyis
 import json
+import demjson
+import os
+print(os.getcwd())
 
-# sys.path.append('/ffmpeg-4.2.2')
+sys.path.append('/ffmpeg-4.2.2')
 # !/usr/bin/env python
 
 
@@ -61,9 +64,16 @@ def upload_file():
     if request.method == 'POST':
         # print("request is a post request")
         # check if the post request has the file part
+
+
+        # Getting files from request
+        res = request.form['stringSelected']
+        res = json.loads(res)
+        plucked_string = res['stringSelected']
+
         file = request.files['base64data']
-        selected_string = request.files['stringSelected']
-        print(selected_string)
+
+        print(file)
         audio = pydub.AudioSegment.from_mp3(file)
         segment_duration = len(audio)  # important property for FFT analyis
         print("Segment duration", segment_duration)
@@ -87,7 +97,7 @@ def upload_file():
         comment = ''
         if (max_index - desired_freq < 0):
             tighten = True
-            comment = f"Tighten string. Desired was {desired_freq}. Your was {max_index}"
+            comment = f'Tighten string. Desired was {desired_freq}. Your was {max_index}'
         else:
             tighten = False
             comment = "Loosen string"
@@ -138,7 +148,6 @@ def save_record():
     print(file)
 
     return "OK"
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)  # run app in debug mode on port 5000
