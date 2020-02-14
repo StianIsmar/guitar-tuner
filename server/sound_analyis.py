@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib
+from scipy.signal import argrelextrema
+
 
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -7,6 +9,7 @@ from tempfile import TemporaryFile
 
 
 class Sound_analyis:
+
     # guitar_string is one of ["E2","A","D","G","B","E4"]
     def __init__(self, samples, duration, guitar_string):
         self.frequencies = {
@@ -22,10 +25,6 @@ class Sound_analyis:
         self.guitar_string = guitar_string
 
         self.freq_limit = self.set_freq_limit(guitar_string)
-
-        # self.limit = set_freq_limit()
-        # print(f"Duration of audio {self.duration}")
-        # print("Object created...")
 
     def set_freq_limit(self,guitar_string):
         return self.frequencies.get(guitar_string)
@@ -61,36 +60,38 @@ class Sound_analyis:
         plt.xticks(np.arange(0, MAX_GUITAR_FREQUENCY, 10))
         plt.margins(0)
 
-        plt.savefig("FFT plot")
+        plt.savefig("FFT plot") # Plotting the FFT analyis
         outfile = TemporaryFile()
         # np.save(outfile, samples)
         desired_freq = self.frequencies.get(self.guitar_string)
         return max_index, desired_freq # Returns where the max frequency was and the desired frequency
 
     def filter_freq(self,f,y_norm):
-        print("THIS IS F: ", f)
+        # Setting the range where the frequencies are kept, the rest are set to 0.
         UPPER_LIMIT = (self.freq_limit + 30)
         LOWER_LIMIT = (self.freq_limit - 30)
-        print("UPPER_LIMIT:", UPPER_LIMIT )
-        print("LOWER_LIMIT:", LOWER_LIMIT )
         #indexes = np.nonzero((f > UPPER_LIMIT) & (f < LOWER_LIMIT))
 
         indexes = [(f > (UPPER_LIMIT)) | (f < (LOWER_LIMIT))] # Look for the frequency magnitude peak in only the expected ranges
-        # print("THIS IS INDEXES", indexes)
+
         for i, index in enumerate(indexes[0]):
             if (index):
                 y_norm[i] = 0
             else:
                 continue
 
+        # The next two lines might be interesting for the E2 string, because of the 3 peaks..
+        local_maximums_indeces = argrelextrema(y_norm, np.greater)
+        print("LOCAL MAXIMUMS: ", local_maximums_indeces)
+
         max_value = np.max(y_norm)
-        max_index = np.where(y_norm == max_value)
+        max_index = np.where(y_norm == max_value) # Getting the index of the max! This should be the FIRST max!
 
         freq = f[max_index]
 
         print(f"max_value: {max_value} and corresponding frequency: {freq}")
+
         return f, y_norm, max_value, freq
-# T = self.t[1] - self.t[0]
 
 if __name__ == '__main__':
 

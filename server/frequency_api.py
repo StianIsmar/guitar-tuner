@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import os
+import sys
 import audioread
 from flask import Flask, request  # import main Flask class and request object
 from flask_cors import CORS
@@ -17,19 +19,12 @@ import numpy as np
 import matplotlib
 
 matplotlib.use('Agg')
-import matplotlib.pyplot as pl
+import matplotlib.pyplot as plt
 from tempfile import TemporaryFile
 import sound_analyis
 import json
 import demjson
-import os
-print(os.getcwd())
 
-sys.path.append('/ffmpeg-4.2.2')
-# !/usr/bin/env python
-
-
-# from ffprobe import FFProbe
 
 from subprocess import call
 
@@ -60,38 +55,35 @@ def allowed_file(filename):
 # Get the blob of type "audio/webm;codecs=opus"
 @app.route('/audio_record', methods=['POST', 'GET'])
 def upload_file():
-    # print("OKKKK")
     if request.method == 'POST':
-        # print("request is a post request")
-        # check if the post request has the file part
-
 
         # Getting files from request
         res = request.form['stringSelected']
         res = json.loads(res)
         plucked_string = res['stringSelected']
 
-        file = request.files['base64data']
+        file = request.files['base64data'] # The sound file
 
-        print(file)
-        audio = pydub.AudioSegment.from_mp3(file)
+        audio = pydub.AudioSegment.from_mp3(file) # Parcing the Blob to mp3
         segment_duration = len(audio)  # important property for FFT analyis
         print("Segment duration", segment_duration)
         samples = audio.get_array_of_samples()
         samples = np.array(samples)
-        print(len(samples))
+        
+
+        # Creating figure for recorded audio with matplotlib
         plt.figure(figsize=(15, 5))
         plt.plot(samples)
         plt.savefig("plot")
         outfile = TemporaryFile()
         np.save(outfile, samples)
-        print(samples)
 
+        # Uncomment for saving vibrations in a .txt file
         # np.savetxt('segment_duration.out',[segment_duration])
         # np.savetxt('test.out', samples, delimiter=',')
 
         # FFT
-        analysis = sound_analyis.Sound_analyis(samples, segment_duration, "E2")
+        analysis = sound_analyis.Sound_analyis(samples, segment_duration, plucked_string)
         max_index, desired_freq = analysis.fft_transform()
 
         comment = ''
@@ -116,38 +108,6 @@ def upload_file():
         response = json.dumps(response_dict)
         return response
 
-        '''
-        return 
-            <!doctype html>
-            <title>Upload new File</title>
-            <h1>Upload new File</h1>
-            <form method=post enctype=multipart/form-data>
-              <input type=file name=file>
-              <input type=submit value=Upload>
-            </form>
-            
-        '''
-
-
-def save_record():
-    if request.method == 'GET':
-        print("Get request first")
-        return "get request"
-    try:
-        file = request.files['base64data'].filename
-    except:
-        file = request.form['base64data']
-
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return redirect(url_for('uploaded_file',
-                                filename=filename))
-
-    print(type(file))
-    print(file)
-
-    return "OK"
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)  # run app in debug mode on port 5000
