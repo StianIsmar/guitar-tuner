@@ -6,6 +6,7 @@ import ButtonGroup from "react-bootstrap/Button";
 import MicRecorder from "mic-recorder-to-mp3";
 import TransmitAudio from "./TransmitAudio";
 import "../css/Record.css";
+import StringButtons from "./StringButtons";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -23,6 +24,7 @@ class Record extends Component {
       desiredFreq: "",
       actualFreq: ""
     };
+    var stingNames = new Object();
     this.transmitAudioElement = React.createRef();
   }
 
@@ -110,91 +112,11 @@ class Record extends Component {
         </header>
 
         <div className="select-string row">
-          <ButtonGroup className="mb-3" aria-label="Basic example">
-            <div style={{ borderColor: "inherit" }}>
-              {this.state.falseCondition ? (
-                <Alert
-                  variant="danger"
-                  onClose={() => this.setShow(true)}
-                  dismissible
-                >
-                  <Alert.Heading style={{ fontSize: "12px" }}>
-                    {" "}
-                    You need the select a string tune!
-                  </Alert.Heading>
-                </Alert>
-              ) : (
-                <div></div>
-              )}
-            </div>
-            <Alert></Alert>
-            <Button
-              style={
-                this.state.button_pressed === "E2"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("E2")}
-              variant="secondary"
-            >
-              E<sub>2</sub>
-            </Button>
-            <Button
-              style={
-                this.state.button_pressed === "A"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("A")}
-              variant="secondary"
-            >
-              A
-            </Button>
-            <Button
-              style={
-                this.state.button_pressed === "D"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("D")}
-              variant="secondary"
-            >
-              D
-            </Button>
-            <Button
-              style={
-                this.state.button_pressed === "G"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("G")}
-              variant="secondary"
-            >
-              G
-            </Button>
-            <Button
-              style={
-                this.state.button_pressed === "B"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("B")}
-              variant="secondary"
-            >
-              B
-            </Button>
-            <Button
-              style={
-                this.state.button_pressed === "E4"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("E4")}
-              variant="secondary"
-            >
-              E<sub>4</sub>
-            </Button>
-          </ButtonGroup>
+          <StringButtons
+            button_pressed={this.state.button_pressed}
+            false_condition={this.state.falseCondition}
+            stringButton={this.stringButton}
+          ></StringButtons>
         </div>
         <div className="record-button row">
           <Button
