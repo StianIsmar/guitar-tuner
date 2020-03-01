@@ -18,7 +18,10 @@ class Record extends Component {
       isBlocked: false,
       button_pressed: "",
       recorded: false,
-      falseCondition: false
+      falseCondition: false,
+      returnMessage: "",
+      desiredFreq: "",
+      actualFreq: ""
     };
     this.transmitAudioElement = React.createRef();
   }
@@ -82,6 +85,20 @@ class Record extends Component {
 
   setShow = bool => {
     this.setState({ falseCondition: bool });
+  };
+
+  tightenOrLoosen = (tightenOrLoosen, desiredFreq, actualFreq) => {
+    this.setState({
+      returnMessage: tightenOrLoosen,
+      actualFreq: actualFreq,
+      desiredFreq: desiredFreq
+    });
+    console.log("This.state");
+    console.log(
+      this.state.returnMessage,
+      this.state.desiredFreq,
+      this.state.actualFreq
+    );
   };
 
   render() {
@@ -195,10 +212,16 @@ class Record extends Component {
             Stop
           </Button>
         </div>
+
         <div className="playback row">
           <audio src={this.state.blobURL} controls="controls" />
         </div>
-        <TransmitAudio ref={this.transmitAudioElement} />
+        <TransmitAudio
+          ref={this.transmitAudioElement}
+          tightenOrLoosen={this.tightenOrLoosen}
+        />
+        <div>Hello</div>
+        <div>{this.state.returnMessage}</div>
       </div>
     );
   }

@@ -56,11 +56,13 @@ class TransmitAudio extends React.Component {
       contentType: false,
       enctype: "multipart/form-data"
     })
-      .then(function(response) {
-        return response.text();
-      })
-      .then(function(text) {
-        console.log(text); // The text the endpoint returns
+      .then(res => res.json())
+      .then(res => {
+        this.props.tightenOrLoosen(
+          res.tighten,
+          res.desired_freq,
+          res.actual_freq
+        );
       })
       .catch(error => console.log(error));
   }
