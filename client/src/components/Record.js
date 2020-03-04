@@ -24,7 +24,6 @@ class Record extends Component {
       desiredFreq: "",
       actualFreq: ""
     };
-    var stingNames = new Object();
     this.transmitAudioElement = React.createRef();
   }
 
@@ -89,9 +88,13 @@ class Record extends Component {
     this.setState({ falseCondition: bool });
   };
 
-  tightenOrLoosen = (tightenOrLoosen, desiredFreq, actualFreq) => {
+  tightenOrLoosen = (tighten, desiredFreq, actualFreq, message) => {
+    if (tighten === false) {
+      tighten = "";
+    }
+
     this.setState({
-      returnMessage: tightenOrLoosen,
+      returnMessage: message,
       actualFreq: actualFreq,
       desiredFreq: desiredFreq
     });
@@ -142,8 +145,8 @@ class Record extends Component {
           ref={this.transmitAudioElement}
           tightenOrLoosen={this.tightenOrLoosen}
         />
-        <div>Hello</div>
-        <div>{this.state.returnMessage}</div>
+        <div>{this.state.actualFreq}</div>
+        <h3>{this.state.returnMessage}</h3>
       </div>
     );
   }

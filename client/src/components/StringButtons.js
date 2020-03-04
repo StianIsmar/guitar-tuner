@@ -6,7 +6,15 @@ import ButtonGroup from "react-bootstrap/Button";
 class StringButtons extends Component {
   constructor(props) {
     super(props);
+    this.state = { value: this.props.falseCondition };
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.falseCondition) {
+      this.setState({ value: this.props.falseCondition });
+    }
+  }
+
   render() {
     return (
       <div>
@@ -28,6 +36,7 @@ class StringButtons extends Component {
             )}
           </div>
           <Alert></Alert>
+
           <Button
             style={
               this.props.button_pressed === "E2"
@@ -39,6 +48,7 @@ class StringButtons extends Component {
           >
             E<sub>2</sub>
           </Button>
+
           <Button
             style={
               this.props.button_pressed === "A"
@@ -50,6 +60,7 @@ class StringButtons extends Component {
           >
             A
           </Button>
+
           <Button
             style={
               this.props.button_pressed === "D"
@@ -61,6 +72,7 @@ class StringButtons extends Component {
           >
             D
           </Button>
+
           <Button
             style={
               this.props.button_pressed === "G"
@@ -72,6 +84,7 @@ class StringButtons extends Component {
           >
             G
           </Button>
+
           <Button
             style={
               this.props.button_pressed === "B"
@@ -83,6 +96,7 @@ class StringButtons extends Component {
           >
             B
           </Button>
+
           <Button
             style={
               this.props.button_pressed === "E4"
