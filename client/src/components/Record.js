@@ -84,10 +84,6 @@ class Record extends Component {
     }); // String is selected by the user
   };
 
-  setShow = bool => {
-    this.setState({ falseCondition: bool });
-  };
-
   tightenOrLoosen = (tighten, desiredFreq, actualFreq, message) => {
     if (tighten === false) {
       tighten = "";
@@ -106,6 +102,10 @@ class Record extends Component {
     );
   };
 
+  revertFalseState = () => {
+    this.setState({ falseCondition: false });
+  };
+
   render() {
     return (
       <div className="record-wrapper row">
@@ -119,6 +119,7 @@ class Record extends Component {
             button_pressed={this.state.button_pressed}
             false_condition={this.state.falseCondition}
             stringButton={this.stringButton}
+            revertFalseCondition={this.revertFalseState}
           ></StringButtons>
         </div>
         <div className="record-button row">

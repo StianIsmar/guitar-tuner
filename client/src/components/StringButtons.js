@@ -6,21 +6,30 @@ import ButtonGroup from "react-bootstrap/Button";
 class StringButtons extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: this.props.falseCondition };
+    this.state = { falseCondition: this.props.falseCondition };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.value !== this.props.falseCondition) {
-      this.setState({ value: this.props.falseCondition });
-    }
+  componentWillReceiveProps(nextProps) {
+    console.log("Updated component in child!");
+
+    this.setState(
+      { falseCondition: nextProps.false_condition },
+      console.log("New state from the parent is: ", nextProps.false_condition)
+    );
   }
+  setShow = bool => {
+    this.setState(
+      { falseCondition: !this.state.falseCondition },
+      this.props.revertFalseCondition()
+    );
+  };
 
   render() {
     return (
       <div>
         <ButtonGroup className="mb-3" aria-label="Basic example">
           <div style={{ borderColor: "inherit" }}>
-            {this.props.falseCondition ? (
+            {this.state.falseCondition ? (
               <Alert
                 variant="danger"
                 onClose={() => this.setShow(true)}
@@ -28,7 +37,7 @@ class StringButtons extends Component {
               >
                 <Alert.Heading style={{ fontSize: "12px" }}>
                   {" "}
-                  You need the select a string tune!
+                  You need the select a string to tune!
                 </Alert.Heading>
               </Alert>
             ) : (
