@@ -2,10 +2,11 @@ body > #root > div {
   height: 100vh;
 }
 
-.App{
+.App,header{
   width: 100%;
   height: 100%;
   background-color: #7DBBC3;
   text-align: center;
   padding-top: 30px;
+  margin:0;
 }

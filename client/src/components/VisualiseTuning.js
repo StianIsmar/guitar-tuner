@@ -11,7 +11,7 @@ class VisualiseTuning extends Component {
       var diff =
         parseFloat(this.props.actualFreq) / parseFloat(this.props.desiredFreq);
       // The closer to 1.0, the less you need to tune the guitar
-      console.log(0.6 * diff * this.props.recorderWidth);
+      //console.log(0.6 * diff * this.props.recorderWidth);
       var lengthOfBar = 0.6 * this.props.recorderWidth - 34;
       var halfLength = lengthOfBar / 2;
       var coordinate = halfLength - (1 - diff) * halfLength;
@@ -21,7 +21,7 @@ class VisualiseTuning extends Component {
       var diff =
         parseFloat(this.props.actualFreq) / parseFloat(this.props.desiredFreq);
       // The closer to 1.0, the less you need to tune the guitar
-      console.log(0.6 * diff * this.props.recorderWidth);
+      // console.log(0.6 * diff * this.props.recorderWidth);
       var lengthOfBar = 0.6 * this.props.recorderWidth - 34;
       var halfLength = lengthOfBar / 2;
       var coordinate = halfLength + (1 - diff) * halfLength;
@@ -29,10 +29,11 @@ class VisualiseTuning extends Component {
 
     return (
       <div>
+        {this.props.renderMessage()}
         {0.6 * this.props.recorderWidth}
         <div>In tune</div>
         <div className="flex-col-container">
-          <div className="row_visualisation">Tighten</div>
+          <div className="row_visualisation">Too tight</div>
           <svg height="20" width={0.6 * this.props.recorderWidth}>
             <rect
               id="blue-rectangle"
@@ -50,7 +51,7 @@ class VisualiseTuning extends Component {
               style={{ fill: "red" }}
             />
           </svg>
-          <div className="row_visualisation">Loosen</div>
+          <div className="row_visualisation">Too loose</div>
         </div>
       </div>
     );

@@ -110,6 +110,18 @@ class Record extends Component {
   revertFalseState = () => {
     this.setState({ falseCondition: false });
   };
+  renderMessage = () => {
+    var text = "";
+    console.log(text);
+    if (this.state.recorded) {
+      if (this.state.tighten) {
+        text = "Tighten the string";
+      } else if (!this.state.tighten) {
+        text = "Loosen the string";
+      }
+      return <h3 className="row">{text}</h3>;
+    }
+  };
 
   render() {
     return (
@@ -122,21 +134,20 @@ class Record extends Component {
           <h5>Select the string you are tuning</h5>
         </header>
         <div>
-          {"" == "" ? (
+          {this.state.desiredFreq !== "" ? (
             <VisualiseTuning
-              desiredFreq={"142.3"}
-              actualFreq={"200"}
-              tighten={"true"}
+              desiredFreq={this.state.desiredFreq}
+              actualFreq={this.state.actualFreq}
+              tighten={this.state.tighten}
               recorderWidth={this.state.recorderWidth}
+              renderMessage={this.renderMessage}
             ></VisualiseTuning>
           ) : (
-            <div>Empty div</div>
+            <div></div>
           )}
         </div>
 
         <div className="select-string row">
-          <h3 className="row">{this.state.returnMessage}</h3>
-
           <StringButtons
             button_pressed={this.state.button_pressed}
             false_condition={this.state.falseCondition}
