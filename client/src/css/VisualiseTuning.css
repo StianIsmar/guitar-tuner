@@ -14,7 +14,14 @@ svg {
     display: flex;
     align-items: center;
   }
-
-  .column{
-      flex-direction: column;
+  .row_visualisation{
+      flex:0.2
   }
+  .col_visualisation{
+    flex-direction: column;
+}
+
+  svg{
+    flex: 0.6 
+  }
+  
