@@ -7,6 +7,8 @@ import MicRecorder from "mic-recorder-to-mp3";
 import TransmitAudio from "./TransmitAudio";
 import "../css/Record.css";
 import StringButtons from "./StringButtons";
+import VisualiseTuning from "./VisualiseTuning";
+import ReportSize from "./ReportSize";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -22,7 +24,9 @@ class Record extends Component {
       falseCondition: false,
       returnMessage: "",
       desiredFreq: "",
-      actualFreq: ""
+      actualFreq: "",
+      tighten: "",
+      recorderWidth: 0
     };
     this.transmitAudioElement = React.createRef();
   }
@@ -85,16 +89,17 @@ class Record extends Component {
   };
 
   tightenOrLoosen = (tighten, desiredFreq, actualFreq, message) => {
-    if (tighten === false) {
-      tighten = "";
-    }
+    //if (tighten === false) {
+    //tighten = "";
+    //}
 
     this.setState({
       returnMessage: message,
       actualFreq: actualFreq,
-      desiredFreq: desiredFreq
+      desiredFreq: desiredFreq,
+      tighten: tighten
     });
-    console.log("This.state");
+    console.log("This.state:");
     console.log(
       this.state.returnMessage,
       this.state.desiredFreq,
@@ -110,11 +115,28 @@ class Record extends Component {
     return (
       <div className="record-wrapper row">
         <header>
+          <ReportSize
+            getSize={size => this.setState({ recorderWidth: size.width })}
+          />
           <h1>Welcome to GuitarTuner</h1>
-          <h3>Select the string you are tuning</h3>
+          <h5>Select the string you are tuning</h5>
         </header>
+        <div>
+          {"" == "" ? (
+            <VisualiseTuning
+              desiredFreq={"142.3"}
+              actualFreq={"200"}
+              tighten={"true"}
+              recorderWidth={this.state.recorderWidth}
+            ></VisualiseTuning>
+          ) : (
+            <div>Empty div</div>
+          )}
+        </div>
 
         <div className="select-string row">
+          <h3 className="row">{this.state.returnMessage}</h3>
+
           <StringButtons
             button_pressed={this.state.button_pressed}
             false_condition={this.state.falseCondition}
@@ -122,6 +144,7 @@ class Record extends Component {
             revertFalseCondition={this.revertFalseState}
           ></StringButtons>
         </div>
+
         <div className="record-button row">
           <Button
             variant="danger"
@@ -146,8 +169,6 @@ class Record extends Component {
           ref={this.transmitAudioElement}
           tightenOrLoosen={this.tightenOrLoosen}
         />
-        <div>{this.state.actualFreq}</div>
-        <h3>{this.state.returnMessage}</h3>
       </div>
     );
   }
