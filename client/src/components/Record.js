@@ -124,8 +124,8 @@ class Record extends Component {
         <div>
           {"" == "" ? (
             <VisualiseTuning
-              desiredFreq={"151.1"}
-              actualFreq={"142.3"}
+              desiredFreq={"142.3"}
+              actualFreq={"200"}
               tighten={"true"}
               recorderWidth={this.state.recorderWidth}
             ></VisualiseTuning>
