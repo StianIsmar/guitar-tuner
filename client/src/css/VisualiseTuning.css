@@ -1,0 +1,20 @@
+svg {
+    border: 3px solid #eee;
+    display: block;
+    margin: 1em auto;
+  }
+  p {
+    color: #aaa;
+    text-align: center;
+    margin: 2em 0;
+  }
+
+
+  .flex-col-container{
+    display: flex;
+    align-items: center;
+  }
+
+  .column{
+      flex-direction: column;
+  }
