@@ -111,7 +111,7 @@ class Record extends Component {
       <div className="record-wrapper row">
         <header>
           <h1>Welcome to GuitarTuner</h1>
-          <h3>Select the string you are tuning</h3>
+          <h5>Select the string you are tuning</h5>
         </header>
 
         <div className="select-string row">
@@ -146,8 +146,8 @@ class Record extends Component {
           ref={this.transmitAudioElement}
           tightenOrLoosen={this.tightenOrLoosen}
         />
-        <div>{this.state.actualFreq}</div>
-        <h3>{this.state.returnMessage}</h3>
+        <div>OKK{this.state.actualFreq}</div>
+        <h3 className="row">DO SUM{this.state.returnMessage}</h3>
       </div>
     );
   }
