@@ -12,7 +12,7 @@ Guitar tuner built with ReactJS front-end and Python Flask API on the backend. T
 
 
 ## How the app is built:
-  1. [mic-recorder-to-mp3](https://www.google.com/search?q=mic-recorder-to-mp3&rlz=1C5CHFA_enAU883AU883&oq=mic-recorder-to-mp3&aqs=chrome..69i57.196j0j7&sourceid=chrome&ie=UTF-8) is used to record mp3 on the client side.
+  1. The audio is recorded on the client-side using [mic-recorder-to-mp3](https://www.google.com/search?q=mic-recorder-to-mp3&rlz=1C5CHFA_enAU883AU883&oq=mic-recorder-to-mp3&aqs=chrome..69i57.196j0j7&sourceid=chrome&ie=UTF-8).
   2. POST request with audio information is sent to a REST API running with Flask.
   3. The mp3 file is then parsed with [pydub](https://pypi.org/project/pydub/) to a numpy array:
 <p align="center">
