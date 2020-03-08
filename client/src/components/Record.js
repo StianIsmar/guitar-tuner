@@ -132,7 +132,7 @@ class Record extends Component {
       <div className="record-wrapper row">
         <header>
           <h1>GuitarTuner</h1>
-          <h6 className="made-with">Made with Flask and ReactJs</h6>
+          <h6 className="made-with">Built using Flask and ReactJs</h6>
           <h5>Select the string you wish to tune</h5>
         </header>
         <div>

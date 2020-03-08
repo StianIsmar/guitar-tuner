@@ -56,7 +56,7 @@ class Sound_analyis:
         plt.xlabel("Hz")
         plt.ylabel("Normalized magnitued")
         plt.xlim(0, MAX_GUITAR_FREQUENCY)
-        plt.ylim(0,max_val+5)
+        plt.ylim(0,max_val*1.1)
         plt.xticks(np.arange(0, MAX_GUITAR_FREQUENCY, 10))
         plt.margins(0)
 
