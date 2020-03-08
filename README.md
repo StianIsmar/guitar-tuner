@@ -7,14 +7,14 @@ Guitar tuner built with ReactJS front-end and Python Flask API on the backend. T
 4. [How it is build](#built)
 
 
-## Screenshots of the webapp: <a name="screenshots"></a>
+## Screenshots Of The Webapp: <a name="screenshots"></a>
 <p align="center">
   <img height='450px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/landing1.png" alt="screenshot" />
   <img height='450px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/recorded1.png" alt="screenshot" />
   
 </p>
 
-## Idea behind the app: <a name="idea"></a>
+## Idea Behind The App: <a name="idea"></a>
 The idea is that a user can record one guitar string at a time and get visual feedback as to how in tune the string is with regards to the desired "tuning frequencies":
 
 | **String** | **Frequency** |
@@ -25,7 +25,7 @@ The idea is that a user can record one guitar string at a time and get visual fe
 | B          | 246.94        |
 | E4         | 329.63        |
 
-## Running project <a name="installation"></a>
+## Running Project locally <a name="installation"></a>
 1. Install Python3
 2. Clone repo: ``` git clone git@github.com:StianIsmar/guitar-tuner.git```
 3. Make sure you are in guitar-tuner and run ```pip install -r server/requirements.txt``` to install python packages.
@@ -36,7 +36,7 @@ The idea is that a user can record one guitar string at a time and get visual fe
 7. Get out your guitar.
 
 
-## How the app is built: <a name="built"></a>
+## How The App Is Built: <a name="built"></a>
   1. The audio is recorded on the client-side using [mic-recorder-to-mp3](https://www.google.com/search?q=mic-recorder-to-mp3&rlz=1C5CHFA_enAU883AU883&oq=mic-recorder-to-mp3&aqs=chrome..69i57.196j0j7&sourceid=chrome&ie=UTF-8).
   2. POST request with audio information is sent to a REST API running with Flask.
   3. The mp3 file is then parsed with [pydub](https://pypi.org/project/pydub/) to a numpy array:
