@@ -19,11 +19,11 @@ The idea is that a user can record one guitar string at a time and get visual fe
 
 | **String** | **Frequency** |
 |------------|---------------|
-| A          | 110.0         |
-| D          | 146.83        |
-| G          | 196.00        |
-| B          | 246.94        |
-| E4         | 329.63        |
+| **A**          | 110.0         |
+| **D**          | 146.83        |
+| **G**          | 196.00        |
+| **B**          | 246.94        |
+| **E4**         | 329.63        |
 
 ## Running Project locally <a name="installation"></a>
 1. Install Python3 and [ffmpeg](https://github.com/jiaaro/pydub#getting-ffmpeg-set-up)
