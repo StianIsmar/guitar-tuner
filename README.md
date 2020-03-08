@@ -23,6 +23,7 @@ Screenshots of the webapp:
   <img height='450px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/fft.png" alt="screenshot" />
 </p>
 5. The frequency spectrum is then filtered according to the desired string frequencies:
+
 | **String** | **Frequency** |
 |------------|---------------|
 | A          | 110.0         |
