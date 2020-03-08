@@ -19,7 +19,8 @@ Screenshots of the webapp:
   <img height='450px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/sound_time.png" alt="screenshot" />
 </p>
   4. A Fast Fourier Transformation with numpy is performed on the array in order to see which frequencies are __present__ in the audio array.
- <p align="center">
+ 
+<p align="center">
   <img height='450px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/fft.png" alt="screenshot" />
 </p>
 5. The frequency spectrum is then filtered according to the desired string frequencies:
