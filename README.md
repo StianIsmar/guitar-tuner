@@ -26,7 +26,7 @@ The idea is that a user can record one guitar string at a time and get visual fe
 | E4         | 329.63        |
 
 ## Running Project locally <a name="installation"></a>
-1. Install Python3
+1. Install Python3 and [ffmpeg](https://github.com/jiaaro/pydub#getting-ffmpeg-set-up)
 2. Clone repo: ``` git clone git@github.com:StianIsmar/guitar-tuner.git```
 3. Make sure you are in guitar-tuner and run ```pip install -r server/requirements.txt``` to install python packages.
 4. Run API with ```python server/frequency_api.py```
