@@ -16,12 +16,12 @@ Screenshots of the webapp:
   2. POST request with audio information is sent to a REST API running with Flask.
   3. The mp3 file is then parsed with [pydub](https://pypi.org/project/pydub/) to a numpy array:
 <p align="center">
-  <img height='450px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/sound_time.png" alt="screenshot" />
+  <img height='450px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/plot.png" alt="screenshot" />
 </p>
   4. A Fast Fourier Transformation with numpy is performed on the array in order to see which frequencies are __present__ in the audio array.
  
 <p align="center">
-  <img height='450px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/fft.png" alt="screenshot" />
+  <img height='450px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/FFTplot.png" alt="screenshot" />
 </p>
 
 5. The frequency spectrum is then filtered according to the desired string frequencies:
