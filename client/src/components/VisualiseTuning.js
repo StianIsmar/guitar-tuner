@@ -56,7 +56,7 @@ class VisualiseTuning extends Component {
               x={coordinate}
               width={17}
               height="20"
-              style={{ fill: "#23395B" }}
+              style={{ fill: "red" }}
               rx="1"
             />
             <rect
@@ -64,7 +64,7 @@ class VisualiseTuning extends Component {
               x={halfLength}
               width={2}
               height="20"
-              style={{ fill: "red" }}
+              style={{ fill: "#23395B" }}
             />
           </svg>
           <div className="row_visualisation">Too loose</div>
