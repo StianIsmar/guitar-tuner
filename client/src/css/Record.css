@@ -47,7 +47,8 @@ body > #root > div {
   }
   .btn-primary, .select-string, .record-button {
     border: none;
-    border-color:none  }
+    border-color:none;
+  }
 
   .btn-secondary{
     background-color: #23395B !important;
@@ -70,3 +71,11 @@ body > #root > div {
     position:relative
   }
   
+.made-with{
+  margin-bottom: 80px;
+}
+
+
+.record-stop-text{
+  --font-size:10px
+}

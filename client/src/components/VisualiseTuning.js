@@ -29,12 +29,12 @@ class VisualiseTuning extends Component {
       }
 
       var halfLength = lengthOfBar / 2;
-      var coordinate = halfLength - (1 - diff) * halfLength;
+      var coordinate = halfLength - (1 - diff) * 2 * halfLength;
     }
     if (!this.props.tighten) {
       // Tighten
       var diff =
-        parseFloat(this.props.actualFreq) / parseFloat(this.props.desiredFreq);
+        parseFloat(this.props.desiredFreq) / parseFloat(this.props.actualFreq);
       // The closer to 1.0, the less you need to tune the guitar
       // console.log(0.6 * diff * this.props.recorderWidth);
       // var lengthOfBar = 0.6 * this.state.recorderWidth - 34;
@@ -43,12 +43,11 @@ class VisualiseTuning extends Component {
         var lengthOfBar = 0.6 * this.state.recorderWidth;
       }
       var halfLength = lengthOfBar / 2;
-      var coordinate = halfLength + (1 - diff) * halfLength;
+      var coordinate = halfLength + (1 - diff) * 2 * halfLength;
     }
 
     return (
       <div>
-        <div style={{ marginBottom: "0px" }}>In tune</div>
         <div className="flex-col-container">
           <div className="row_visualisation">Too tight</div>
           <svg height="20" width={lengthOfBar}>

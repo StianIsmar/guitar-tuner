@@ -34,9 +34,9 @@ class Record extends Component {
   start = () => {
     if (this.state.button_pressed === "") {
       this.setState({ falseCondition: !this.state.falseCondition });
-      console.log("Button_pressed is empty");
+      // Button_pressed is empty
     } else if (this.state.isBlocked) {
-      console.log("Permission Denied");
+      // Permission Denied
     } else {
       this.setState({ falseCondition: false });
       Mp3Recorder.start()
@@ -63,47 +63,32 @@ class Record extends Component {
         );
         this.setState({ blobURL, isRecording: false, recorded: true });
       })
-      .catch(e => console.log("eEEEE", e));
+      .catch(e => console.log(console.error(e)));
   };
 
   componentDidMount() {
     navigator.getUserMedia(
       { audio: true },
       () => {
-        console.log("Permission Granted");
         this.setState({ isBlocked: false });
       },
       () => {
-        console.log("Permission Denied");
         this.setState({ isBlocked: true });
       }
     );
   }
 
   stringButton = stringName => {
-    console.log(stringName, "Pressed");
-    this.setState({ button_pressed: stringName, falseCondition: false }, () => {
-      console.log(this.state.button_pressed);
-    }); // String is selected by the user
+    this.setState({ button_pressed: stringName, falseCondition: false }); // String is selected by the user
   };
 
   tightenOrLoosen = (tighten, desiredFreq, actualFreq, message) => {
-    //if (tighten === false) {
-    //tighten = "";
-    //}
-
     this.setState({
       returnMessage: message,
       actualFreq: actualFreq,
       desiredFreq: desiredFreq,
       tighten: tighten
     });
-    console.log("This.state:");
-    console.log(
-      this.state.returnMessage,
-      this.state.desiredFreq,
-      this.state.actualFreq
-    );
   };
 
   revertFalseState = () => {
@@ -111,7 +96,6 @@ class Record extends Component {
   };
   renderMessage = () => {
     var text = "";
-    console.log(text);
     if (this.state.recorded) {
       if (this.state.tighten) {
         text = "Tighten the string";
@@ -147,8 +131,9 @@ class Record extends Component {
     return (
       <div className="record-wrapper row">
         <header>
-          <h1>Welcome to GuitarTuner</h1>
-          <h5>Select the string you are tuning</h5>
+          <h1>GuitarTuner</h1>
+          <h6 className="made-with">Made with Flask and ReactJs</h6>
+          <h5>Select the string you wish to tune</h5>
         </header>
         <div>
           {this.state.desiredFreq !== "" ? (
@@ -179,14 +164,16 @@ class Record extends Component {
             onClick={this.start}
             disabled={this.state.isRecording}
           >
-            Record
+            <span style={{ fontSize: "smaller" }}>Record</span>
           </Button>
           <Button
+            btn
+            btn-large
             variant="danger"
             onClick={this.stop}
             disabled={!this.state.isRecording}
           >
-            Stop
+            <span style={{ fontSize: "smaller" }}>Stop</span>
           </Button>
         </div>
 
