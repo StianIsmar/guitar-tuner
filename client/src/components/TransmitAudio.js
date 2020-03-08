@@ -16,32 +16,10 @@ class TransmitAudio extends React.Component {
       newState
     );
     this.uploadFile(newState);
-    //this.postTest()
   };
-
-  postTest() {
-    fetch("http://127.0.0.1:5000/testpost", {
-      // content-type header should not be specified!
-      method: "POST",
-      name: "stianI"
-    })
-      .then(response => response.json())
-      .then(success => {
-        // Do something with the successful response
-      })
-      .catch(error => console.log(error));
-  }
 
   uploadFile(blob, blobUrl, stringSelected) {
     console.log("BLOB SENT: ", blob);
-    // var blob = new Blob([blob])
-    /*
-        var reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = function () {
-            var base64data = reader.result;
-          */
-
     var fd = new FormData(); // Creating the form for the POST
     fd.append("base64data", blob, Blob);
     var stringObj = { stringSelected: stringSelected };
@@ -61,26 +39,13 @@ class TransmitAudio extends React.Component {
         this.props.tightenOrLoosen(
           res.tighten,
           res.desired_freq,
-          res.actual_freq
+          res.actual_freq,
+          res.comment
         );
       })
       .catch(error => console.log(error));
   }
 
-  /*
-        var http = new XMLHttpRequest();
-          http.open('POST', sttEndpoint, true);
-          http.setRequestHeader('Content-type', 'audio/webm;codecs=opus');
-          http.onreadystatechange = function() {
-            if (http.readyState === 4 && http.status === 200 && http.responseText) {
-              Api.setResponsePayload(http.responseText);
-            }
-          };
-          // Send request
-          http.send(blob);
-          chunks = [];
-          };
-          */
   render() {
     return <div>{this.props.recordingData}</div>;
   }

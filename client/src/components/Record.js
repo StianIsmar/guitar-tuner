@@ -6,6 +6,8 @@ import ButtonGroup from "react-bootstrap/Button";
 import MicRecorder from "mic-recorder-to-mp3";
 import TransmitAudio from "./TransmitAudio";
 import "../css/Record.css";
+import StringButtons from "./StringButtons";
+import VisualiseTuning from "./VisualiseTuning";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -21,7 +23,9 @@ class Record extends Component {
       falseCondition: false,
       returnMessage: "",
       desiredFreq: "",
-      actualFreq: ""
+      actualFreq: "",
+      tighten: "",
+      recorderWidth: ""
     };
     this.transmitAudioElement = React.createRef();
   }
@@ -30,9 +34,9 @@ class Record extends Component {
   start = () => {
     if (this.state.button_pressed === "") {
       this.setState({ falseCondition: !this.state.falseCondition });
-      console.log("Button_pressed is empty");
+      // Button_pressed is empty
     } else if (this.state.isBlocked) {
-      console.log("Permission Denied");
+      // Permission Denied
     } else {
       this.setState({ falseCondition: false });
       Mp3Recorder.start()
@@ -59,157 +63,117 @@ class Record extends Component {
         );
         this.setState({ blobURL, isRecording: false, recorded: true });
       })
-      .catch(e => console.log("eEEEE", e));
+      .catch(e => console.log(console.error(e)));
   };
 
   componentDidMount() {
     navigator.getUserMedia(
       { audio: true },
       () => {
-        console.log("Permission Granted");
         this.setState({ isBlocked: false });
       },
       () => {
-        console.log("Permission Denied");
         this.setState({ isBlocked: true });
       }
     );
   }
 
   stringButton = stringName => {
-    console.log(stringName, "Pressed");
-    this.setState({ button_pressed: stringName, falseCondition: false }, () => {
-      console.log(this.state.button_pressed);
-    }); // String is selected by the user
+    this.setState({ button_pressed: stringName, falseCondition: false }); // String is selected by the user
   };
 
-  setShow = bool => {
-    this.setState({ falseCondition: bool });
-  };
-
-  tightenOrLoosen = (tightenOrLoosen, desiredFreq, actualFreq) => {
+  tightenOrLoosen = (tighten, desiredFreq, actualFreq, message) => {
     this.setState({
-      returnMessage: tightenOrLoosen,
+      returnMessage: message,
       actualFreq: actualFreq,
-      desiredFreq: desiredFreq
+      desiredFreq: desiredFreq,
+      tighten: tighten
     });
-    console.log("This.state");
-    console.log(
-      this.state.returnMessage,
-      this.state.desiredFreq,
-      this.state.actualFreq
-    );
   };
+
+  revertFalseState = () => {
+    this.setState({ falseCondition: false });
+  };
+  renderMessage = () => {
+    var text = "";
+    if (this.state.recorded) {
+      if (this.state.tighten) {
+        text = "Tighten the string";
+      } else if (!this.state.tighten) {
+        text = "Loosen the string";
+      }
+      return <h3 className="row">{text}</h3>;
+    }
+  };
+
+  handleResize = e => {
+    const recorderWidth = window.innerWidth;
+    this.setState(prevState => {
+      return {
+        recorderWidth
+      };
+    });
+  };
+
+  componentDidMount() {
+    const recorderWidth = window.innerWidth;
+    this.setState({
+      recorderWidth: recorderWidth
+    });
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
 
   render() {
     return (
       <div className="record-wrapper row">
         <header>
-          <h1>Welcome to GuitarTuner</h1>
-          <h3>Select the string you are tuning</h3>
+          <h1>GuitarTuner</h1>
+          <h6 className="made-with">Built using Flask and ReactJs</h6>
+          <h5>Select the string you wish to tune</h5>
         </header>
+        <div>
+          {this.state.desiredFreq !== "" ? (
+            <VisualiseTuning
+              desiredFreq={this.state.desiredFreq}
+              actualFreq={this.state.actualFreq}
+              tighten={this.state.tighten}
+              recorderWidth={this.state.recorderWidth}
+              renderMessage={this.renderMessage}
+            ></VisualiseTuning>
+          ) : (
+            <div></div>
+          )}
+        </div>
 
         <div className="select-string row">
-          <ButtonGroup className="mb-3" aria-label="Basic example">
-            <div style={{ borderColor: "inherit" }}>
-              {this.state.falseCondition ? (
-                <Alert
-                  variant="danger"
-                  onClose={() => this.setShow(true)}
-                  dismissible
-                >
-                  <Alert.Heading style={{ fontSize: "12px" }}>
-                    {" "}
-                    You need the select a string tune!
-                  </Alert.Heading>
-                </Alert>
-              ) : (
-                <div></div>
-              )}
-            </div>
-            <Alert></Alert>
-            <Button
-              style={
-                this.state.button_pressed === "E2"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("E2")}
-              variant="secondary"
-            >
-              E<sub>2</sub>
-            </Button>
-            <Button
-              style={
-                this.state.button_pressed === "A"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("A")}
-              variant="secondary"
-            >
-              A
-            </Button>
-            <Button
-              style={
-                this.state.button_pressed === "D"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("D")}
-              variant="secondary"
-            >
-              D
-            </Button>
-            <Button
-              style={
-                this.state.button_pressed === "G"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("G")}
-              variant="secondary"
-            >
-              G
-            </Button>
-            <Button
-              style={
-                this.state.button_pressed === "B"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("B")}
-              variant="secondary"
-            >
-              B
-            </Button>
-            <Button
-              style={
-                this.state.button_pressed === "E4"
-                  ? { borderColor: "orange", color: "orange" }
-                  : { color: "grey" }
-              }
-              onClick={() => this.stringButton("E4")}
-              variant="secondary"
-            >
-              E<sub>4</sub>
-            </Button>
-          </ButtonGroup>
+          <StringButtons
+            button_pressed={this.state.button_pressed}
+            false_condition={this.state.falseCondition}
+            stringButton={this.stringButton}
+            revertFalseCondition={this.revertFalseState}
+          ></StringButtons>
         </div>
+
         <div className="record-button row">
           <Button
             variant="danger"
             onClick={this.start}
             disabled={this.state.isRecording}
           >
-            Record
+            <span style={{ fontSize: "smaller" }}>Record</span>
           </Button>
           <Button
+            btn
+            btn-large
             variant="danger"
             onClick={this.stop}
             disabled={!this.state.isRecording}
           >
-            Stop
+            <span style={{ fontSize: "smaller" }}>Stop</span>
           </Button>
         </div>
 
@@ -220,8 +184,6 @@ class Record extends Component {
           ref={this.transmitAudioElement}
           tightenOrLoosen={this.tightenOrLoosen}
         />
-        <div>Hello</div>
-        <div>{this.state.returnMessage}</div>
       </div>
     );
   }
