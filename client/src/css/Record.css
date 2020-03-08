@@ -3,8 +3,8 @@ body > #root > div {
   }
 
   header{
-    color: #23395B;
-    --color: #1A617F;
+    --color: hsl(216, 44%, 25%);
+    color: white;
     background-color:inherit;
     margin-bottom: 50px;
     text-align: center;
@@ -18,6 +18,7 @@ body > #root > div {
     justify-content: center;
     width:100%;
     background-color: inherit;
+
   }
 
   .row {

@@ -8,7 +8,6 @@ import TransmitAudio from "./TransmitAudio";
 import "../css/Record.css";
 import StringButtons from "./StringButtons";
 import VisualiseTuning from "./VisualiseTuning";
-import ReportSize from "./ReportSize";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -26,7 +25,7 @@ class Record extends Component {
       desiredFreq: "",
       actualFreq: "",
       tighten: "",
-      recorderWidth: 0
+      recorderWidth: ""
     };
     this.transmitAudioElement = React.createRef();
   }
@@ -123,13 +122,31 @@ class Record extends Component {
     }
   };
 
+  handleResize = e => {
+    const recorderWidth = window.innerWidth;
+    this.setState(prevState => {
+      return {
+        recorderWidth
+      };
+    });
+  };
+
+  componentDidMount() {
+    const recorderWidth = window.innerWidth;
+    this.setState({
+      recorderWidth: recorderWidth
+    });
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
+
   render() {
     return (
       <div className="record-wrapper row">
         <header>
-          <ReportSize
-            getSize={size => this.setState({ recorderWidth: size.width })}
-          />
           <h1>Welcome to GuitarTuner</h1>
           <h5>Select the string you are tuning</h5>
         </header>

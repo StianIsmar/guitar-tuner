@@ -4,21 +4,16 @@ import "../css/VisualiseTuning.css";
 class VisualiseTuning extends Component {
   constructor(props) {
     super(props);
+    this.state = { recorderWidth: "" };
   }
 
-  componentDidMount() {
-    window.addEventListener("resize", this.handleResize);
+  static getDerivedStateFromProps(props, state) {
+    if (props.recorderWidth !== state.recorderWidth) {
+      return { recorderWidth: props.recorderWidth };
+    } else {
+      return null;
+    }
   }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.handleResize);
-  }
-
-  handleResize = () => {
-    this.forceUpdate();
-    this.Svg();
-  };
-
   Svg = () => {
     if (this.props.tighten) {
       // Tighten
@@ -26,8 +21,13 @@ class VisualiseTuning extends Component {
         parseFloat(this.props.actualFreq) / parseFloat(this.props.desiredFreq);
       // The closer to 1.0, the less you need to tune the guitar
       //console.log(0.6 * diff * this.props.recorderWidth);
-      console.log(this.props.recorderWidth);
-      var lengthOfBar = 0.6 * this.props.recorderWidth - 34;
+      console.log(this.state.recorderWidth);
+      //var lengthOfBar = 0.6 * this.props.recorderWidth - 34;
+      var lengthOfBar = 300;
+      if (this.state.recorderWidth <= 474) {
+        var lengthOfBar = 0.6 * this.state.recorderWidth;
+      }
+
       var halfLength = lengthOfBar / 2;
       var coordinate = halfLength - (1 - diff) * halfLength;
     }
@@ -37,18 +37,21 @@ class VisualiseTuning extends Component {
         parseFloat(this.props.actualFreq) / parseFloat(this.props.desiredFreq);
       // The closer to 1.0, the less you need to tune the guitar
       // console.log(0.6 * diff * this.props.recorderWidth);
-      var lengthOfBar = 0.6 * this.props.recorderWidth - 34;
+      // var lengthOfBar = 0.6 * this.state.recorderWidth - 34;
+      var lengthOfBar = 300;
+      if (this.state.recorderWidth <= 474) {
+        var lengthOfBar = 0.6 * this.state.recorderWidth;
+      }
       var halfLength = lengthOfBar / 2;
       var coordinate = halfLength + (1 - diff) * halfLength;
     }
 
     return (
       <div>
-        {0.6 * this.props.recorderWidth}
-        <div>In tune</div>
+        <div style={{ marginBottom: "0px" }}>In tune</div>
         <div className="flex-col-container">
           <div className="row_visualisation">Too tight</div>
-          <svg height="20" width={0.6 * this.props.recorderWidth}>
+          <svg height="20" width={lengthOfBar}>
             <rect
               id="blue-rectangle"
               x={coordinate}
@@ -59,7 +62,7 @@ class VisualiseTuning extends Component {
             />
             <rect
               id="red-rectangle"
-              x={halfLength + 15 / 2}
+              x={halfLength}
               width={2}
               height="20"
               style={{ fill: "red" }}
