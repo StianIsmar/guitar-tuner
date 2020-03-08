@@ -18,13 +18,13 @@ Guitar tuner built with ReactJS front-end and Python Flask API on the backend. T
 <p align="center">
   <img height='350px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/plot.png" alt="screenshot" />
 </p>
-  4. A Fast Fourier Transformation with numpy is performed on the array in order to see which frequencies are __present__ in the audio array.
+  4. A Fast Fourier Transformation with numpy is performed on the array in order to see which frequencies are present in the audio array.
  
 <p align="center">
   <img height='350px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/FFTplot.png" alt="screenshot" />
 </p>
 
-5. The frequency spectrum is then filtered according to the desired string frequencies:
+5. The frequency spectrum is then filtered according to the desired string frequencies, and the largest amplitude frequency is returned in the POST response from the Flask API.
 
 | **String** | **Frequency** |
 |------------|---------------|
