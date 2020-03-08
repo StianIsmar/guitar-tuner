@@ -8,7 +8,16 @@ Guitar tuner built with ReactJS front-end and Python Flask API on the backend. T
   
 </p>
 
+## Idea behind the app:
+The idea is that a user can record one guitar string at a time and get visual feedback as to how in tune the string is with regard to the desired "tuning frequencies":
 
+| **String** | **Frequency** |
+|------------|---------------|
+| A          | 110.0         |
+| D          | 146.83        |
+| G          | 196.00        |
+| B          | 246.94        |
+| E4         | 329.63        |
 
 
 ## How the app is built:
@@ -26,13 +35,6 @@ Guitar tuner built with ReactJS front-end and Python Flask API on the backend. T
 
 5. The frequency spectrum is then filtered according to the desired string frequencies, and the largest amplitude frequency is returned in the POST response from the Flask API.
 
-| **String** | **Frequency** |
-|------------|---------------|
-| A          | 110.0         |
-| D          | 146.83        |
-| G          | 196.00        |
-| B          | 246.94        |
-| E4         | 329.63        |
 
 
 **Python
