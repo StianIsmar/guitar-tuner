@@ -4,6 +4,7 @@ body > #root > div {
 
   header{
     color: #23395B;
+    --color: #1A617F;
     background-color:inherit;
     margin-bottom: 50px;
     text-align: center;
