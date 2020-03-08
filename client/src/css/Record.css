@@ -3,7 +3,8 @@ body > #root > div {
   }
 
   header{
-    color: #23395B;
+    --color: hsl(216, 44%, 25%);
+    color: white;
     background-color:inherit;
     margin-bottom: 50px;
     text-align: center;
@@ -16,9 +17,8 @@ body > #root > div {
     align-items: center;
     justify-content: center;
     width:100%;
-    
+    background-color: inherit;
 
-    
   }
 
   .row {
@@ -47,7 +47,8 @@ body > #root > div {
   }
   .btn-primary, .select-string, .record-button {
     border: none;
-    border-color:none  }
+    border-color:none;
+  }
 
   .btn-secondary{
     background-color: #23395B !important;
@@ -70,3 +71,11 @@ body > #root > div {
     position:relative
   }
   
+.made-with{
+  margin-bottom: 80px;
+}
+
+
+.record-stop-text{
+  --font-size:10px
+}
