@@ -7,7 +7,7 @@ Guitar tuner built with ReactJS front-end and Python Flask API on the backend. T
 4. [How it is build](#built)
 
 
-## Screenshots Of The Webapp: <a name="screenshots"></a>
+## Screenshots Of The App: <a name="screenshots"></a>
 <p align="center">
   <img height='450px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/landing1.png" alt="screenshot" />
   <img height='450px' src="https://github.com/StianIsmar/guitar-tuner/blob/master/screenshots/recorded1.png" alt="screenshot" />
