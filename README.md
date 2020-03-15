@@ -19,6 +19,7 @@ The idea is that a user can record one guitar string at a time and get visual fe
 
 | **String** | **Frequency** |
 |------------|---------------|
+| **E2**         | 82.41         |
 | **A**          | 110.0         |
 | **D**          | 146.83        |
 | **G**          | 196.00        |
@@ -28,12 +29,14 @@ The idea is that a user can record one guitar string at a time and get visual fe
 ## Running Project locally <a name="installation"></a>
 1. Install Python3 and [ffmpeg](https://github.com/jiaaro/pydub#getting-ffmpeg-set-up)
 2. Clone repo: ``` git clone git@github.com:StianIsmar/guitar-tuner.git```
-3. Make sure you are in guitar-tuner and run ```pip install -r server/requirements.txt``` to install python packages.
-4. Run API with ```python server/frequency_api.py```
-4. ``cd client```
-5. ```npm i```to install react packages.
-6. ```npm start```
-7. Get out your guitar.
+3. Create a virtual environment with ```virtualenv -p python3 ./venv```
+4. Activate the virtual env with ```source venv/bin/activate```
+4. ```server``` and run ```pip install -r server/requirements.txt``` to install python packages
+5. Run API with ```python server/frequency_api.py```
+6. ```cd client```
+7. ```npm i```to install react packages
+8. ```npm start```
+9. Get out your guitar
 
 
 ## How The App Is Built: <a name="built"></a>
