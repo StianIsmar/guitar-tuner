@@ -4,7 +4,7 @@ Guitar tuner built with ReactJS front-end and Python Flask API on the backend. T
 1. [Screenshots](#screenshots)
 2. [Idea behind app](#idea)
 3. [Installation](#installation)
-4. [How it is build](#built)
+4. [How it is built](#built)
 
 
 ## Screenshots Of The App: <a name="screenshots"></a>
