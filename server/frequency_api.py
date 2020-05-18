@@ -17,6 +17,7 @@ import os
 import sys
 import numpy as np
 import matplotlib
+from flask_sslify import SSLify
 
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -41,6 +42,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('HELLO WORLD')
 
 app = Flask(__name__)  # create the Flask app
+sslify=SSLify(app)
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'super secret key'
 
@@ -50,6 +53,11 @@ CORS(app)
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
 
 
 # Get the blob of type "audio/webm;codecs=opus"
@@ -72,11 +80,11 @@ def upload_file():
         
 
         # Creating figure for recorded audio with matplotlib
-        plt.figure(figsize=(15, 5))
-        plt.plot(samples)
-        plt.savefig("plot")
-        outfile = TemporaryFile()
-        np.save(outfile, samples)
+        #plt.figure(figsize=(15, 5))
+        #plt.plot(samples)
+        #plt.savefig("plot")
+        #outfile = TemporaryFile()
+        #np.save(outfile, samples)
 
         # Uncomment for saving vibrations in a .txt file
         # np.savetxt('segment_duration.out',[segment_duration])
