@@ -1,5 +1,6 @@
 # guitar-tuner
 Guitar tuner built with ReactJS front-end and Python Flask API on the backend. The webapp is responsive.
+Deployed on https://tuneyourguitarnow.web.app/. Python Flask backend is running on an Apache2 server hosted on an AWS EC2 instance.
 # Table of Contents
 1. [Screenshots](#screenshots)
 2. [Idea behind app](#idea)
